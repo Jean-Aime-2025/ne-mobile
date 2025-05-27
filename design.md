@@ -4,9 +4,22 @@
 
 ```mermaid
 flowchart TD
-  User -->|Login, Create/View/Delete Expense| MobileApp
-  MobileApp -->|Fetch/Send Data| MockAPI[MockAPI Server]
-  MockAPI -->|Users Data| MobileApp
-  MockAPI -->|Expenses Data| MobileApp
+  User --> LoginScreen
+  LoginScreen -->|GET /users?username=email| AuthService
+  AuthService --> MockAPI
 
+  User --> DashboardScreen
+  DashboardScreen -->|GET /expenses| ExpenseService
+  ExpenseService --> MockAPI
 
+  User --> AddExpenseScreen
+  AddExpenseScreen -->|POST /expenses| ExpenseService
+  ExpenseService --> MockAPI
+
+  User --> ExpenseDetailScreen
+  ExpenseDetailScreen -->|GET /expenses/:id| ExpenseService
+  ExpenseService --> MockAPI
+
+  User --> ExpenseListScreen
+  ExpenseListScreen -->|DELETE /expenses/:id| ExpenseService
+  ExpenseService --> MockAPI
